@@ -1,0 +1,11 @@
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [NC,L]
+
+
+#uncoment this line on server
+#RewriteCond %{HTTPS}  !=on
+#RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L]
+
+Options -Indexes
