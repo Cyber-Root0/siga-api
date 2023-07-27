@@ -1,9 +1,14 @@
 <?php
 
+//Doc
 $this->get('', function(){
     echo "Estou na area da home";
 });
-$this->get('/notas', 'Notas\\Notas@index');
 
+//Session
+$this->post('/api/session/create', 'Session\\Session@post');
+$this->get('/api/session/refresh', 'Session\\Session@post');
+
+//Notas
 
 

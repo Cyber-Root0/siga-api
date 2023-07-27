@@ -1,7 +1,7 @@
 <?php
 namespace app\controller\Notas;
 use app\core\Controller;
-use app\controller\interfaces\ControllerInterface;
+use app\interfaces\ControllerInterface;
 use app\classes\Input;
 
 Class Notas extends Controller implements ControllerInterface{
@@ -14,6 +14,7 @@ Class Notas extends Controller implements ControllerInterface{
     }
 
     public function Get(){
+
 
 
     }

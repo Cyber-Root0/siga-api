@@ -11,9 +11,14 @@ class controller extends Auth{
 
     }
 
-    protected function load(){
+    public function response($data){
+        $this->setHeader(); 
+        echo json_encode($data);
 
+    }
 
+    public function setHeader(){
+        header($this->header);
     }
     
 }

@@ -10,6 +10,7 @@ class Auth
         $haveAuth = Input::get("token");
         if (!$haveAuth){
             (new \app\controller\MessageController)->message404('401','Você não tem permissão para acessar essa API!!! Seu IP Foi armazenado');
+            exit;
         }else{
             $isValid = $this->ValidateToken($haveAuth);
             if (!$isValid){
