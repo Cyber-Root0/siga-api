@@ -8,11 +8,11 @@ class controller extends Auth{
     public function __construct(){
 
         $this->Auth();
+        $this->setHeader();
 
     }
 
     public function response($data){
-        $this->setHeader(); 
         echo json_encode($data);
 
     }

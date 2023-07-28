@@ -7,7 +7,8 @@ class Auth
     
     protected function Auth(){
 
-        $haveAuth = Input::get("token");
+        $haveAuth = Input::getAuth();
+    
         if (!$haveAuth){
             (new \app\controller\MessageController)->message404('401','Você não tem permissão para acessar essa API!!! Seu IP Foi armazenado');
             exit;

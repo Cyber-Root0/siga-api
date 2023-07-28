@@ -7,7 +7,7 @@ $this->get('', function(){
 
 //Session
 $this->post('/api/session/create', 'Session\\Session@post');
-$this->get('/api/session/refresh', 'Session\\Session@post');
+$this->get('/api/session/refresh', 'Session\\Session@get');
 
 //Notas
 
