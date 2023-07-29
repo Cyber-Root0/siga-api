@@ -5,13 +5,14 @@ use app\core\Controller;
 use app\interfaces\ControllerInterface;
 use app\classes\Input;
 use app\classes\CPF;
+use app\classes\Files;
 
 Class Session extends Controller implements ControllerInterface{
 
     protected $header = "Content-Type: application/json; charset=utf-8";
     private $id = null;
     protected $pwd = null;
-    protected $path_dir = null;
+    protected $path_dir = null; 
     protected $uid = null;
 
     public function index(){
@@ -30,6 +31,7 @@ Class Session extends Controller implements ControllerInterface{
     public function Post(){
         $this->id = Input::post("id");
         $this->pwd = Input::post("password");
+        $this->path_dir = __DIR__.'/../../sessions/'.$this->id;
         $this->create();
 
     }
@@ -39,18 +41,47 @@ Class Session extends Controller implements ControllerInterface{
         if($this->validData()){
             
             //Create USER ID
-            $uid = $this->createUID();
-            $this->makeDir($uid);
+            $this->uid = $this->createUID();
+            $this->setPath();
+            Files::makeDir();
             $this->SaveSession();
+            
             $this->response(
                 array(
                     "code" => 200,
                     "message" => 'Sessão criada com sucesso',
-                    "session_id" => $uid
+                    "session_id" => $this->uid
+                )
+            );
+            
+            
+        }
+
+    }
+
+    public function deleteSession(){
+        $this->id = Input::post("uid");
+        
+        $this->setPath();
+        
+        if (self::issetSession()){
+            Files::removeDir();
+            $this->response(
+                array(
+                    "code" => 200,
+                    "message" => 'Sessão excluida com sucesso',
+                    "uid" => $this->id
+                )
+            );
+        }else{
+            $this->response(
+                array(
+                    "code" => 404,
+                    "message" => 'Essa Sessão não existe',
+                    "uid" => $this->id
                 )
             );
         }
-
     }
 
     public function validData(){
@@ -69,6 +100,10 @@ Class Session extends Controller implements ControllerInterface{
         
     }
 
+    private function setPath(){
+        $this->path_dir=__DIR__.'/../../sessions/'.$this->uid;
+        Files::$path = $this->path_dir;
+    }
     private function setBody($code, $msg){
 
         return array(
@@ -77,17 +112,18 @@ Class Session extends Controller implements ControllerInterface{
         );
     }
 
+    public static function issetSession(){
+        return Files::issetDir();
+    }
+
+
     private function createUID(){
         $ran_bytes = random_bytes(15);
         $uid = bin2hex($ran_bytes);
         return $uid;
     }
 
-    private function makeDir($uid){
-        $this->path_dir = __DIR__.'/../../sessions/'.$uid;
-        mkdir(__DIR__.'/../../sessions/'.$uid);
-    }
-    
+
     private function pack(){
 
         return json_encode(
@@ -100,7 +136,7 @@ Class Session extends Controller implements ControllerInterface{
     }
     private function SaveSession(){
 
-        file_put_contents($this->path_dir.'/user.json', $this->pack());
+        Files::createFile('user.json',$this->pack());
 
     }
 }

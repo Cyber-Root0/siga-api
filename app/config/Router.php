@@ -7,8 +7,8 @@ $this->get('', function(){
 
 //Session
 $this->post('/api/session/create', 'Session\\Session@post');
-$this->get('/api/session/refresh', 'Session\\Session@get');
+$this->post('/api/session/delete', 'Session\\Session@deleteSession');
 
-//Notas
-
+//Disciplinas
+$this->get('/api/disciplinas/all', 'disciplinas\\disciplinas@get');
 

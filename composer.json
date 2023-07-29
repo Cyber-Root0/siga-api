@@ -13,7 +13,8 @@
         }
     ],
     "require": {
-        "spatie/crawler": "*",
-        "guzzlehttp/guzzle": "*"
+        "guzzlehttp/guzzle": "*",
+        "symfony/dom-crawler": "^6.0",
+        "symfony/css-selector": "^6.0"
     }
 }
