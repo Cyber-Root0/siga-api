@@ -29,28 +29,24 @@ Class disciplinas extends Controller{
 
     public function get(){
         
-        if ($this->cookie->issetCookie()){
+       
+                if ($this->status_cookie){
 
-            
-            
-            $XML_HTML = $this->getContent($this->cookie->getCookie());
-            $this->crawler->addHtmlContent($XML_HTML);
-            $disciplinas = $this->crawler->filter('input[name="Grid4ContainerDataV"]')->attr('value');           
-        
-            $dados = $this->trataJson( json_decode($disciplinas));
-            $this->response($dados);
-        
+                    $XML_HTML = $this->getContent($this->cookie->getCookie());
+                    $this->crawler->addHtmlContent($XML_HTML);
+                    $disciplinas = $this->crawler->filter('input[name="Grid4ContainerDataV"]')->attr('value');           
+                
+                    $dados = $this->trataJson( json_decode($disciplinas));
+                    $this->response($dados);
 
-        }else{
-            $this->response(
-                array(
-                    "error" => 400,
-                    "msg" => "Crie uma nova sessão com uma senha correta!"
-                )
-                );
-        }
-      
+                }else{
 
+                    $this->response(array(
+                            "error" => 400,
+                            "msg" => "Crie uma sessão com um usuário válido"
+                    )); 
+
+                }
 
     }
 

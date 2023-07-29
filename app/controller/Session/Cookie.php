@@ -50,8 +50,8 @@ use GuzzleHttp\Cookie\CookieJar;
 
     }
 
-    private function validCookie(){
-
+    public function validCookie(){
+        
         $data = $this->getSavedCookie();
         $this->cookie = CookieJar::fromArray([
             $data[0] => $data[1]
@@ -100,7 +100,7 @@ use GuzzleHttp\Cookie\CookieJar;
 
     }
 
-    private function refresh(){
+    public function refresh(){
 
         $data = file_get_contents($this->path."/user.json");
         $data = json_decode($data);

@@ -8,6 +8,7 @@ require_once('../app/functions/functions.php');
 class controller extends Auth{
      
     protected $cookie;
+    protected $status_cookie = true;
     public function __construct(){
 
         
@@ -41,6 +42,18 @@ class controller extends Auth{
         }else{
             $this->cookie= new Cookie(Input::post("uid"));
         }
+
+        if($this->cookie->issetCookie()){
+            
+            if (!$this->cookie->validCookie()){
+
+                $this->cookie->refresh();
+            }
+            
+        }else{
+            $this->status_cookie = false;
+        }
+
 
     }
 }
