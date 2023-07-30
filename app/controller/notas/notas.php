@@ -1,13 +1,14 @@
 <?php
-namespace app\controller\disciplinas;
+namespace app\controller\notas;
 use app\core\Controller;
 use app\interfaces\ControllerInterface;
 use app\classes\Input;
+use app\classes\FixJson;
 use app\controller\Session\Cookie;
 use app\classes\HttpFactory;
 use Symfony\Component\DomCrawler\Crawler;
 
-Class disciplinas extends Controller{
+Class notas extends Controller{
 
     public $uid = null;
     public $siga = null;
@@ -34,11 +35,11 @@ Class disciplinas extends Controller{
 
                     $XML_HTML = $this->getContent($this->cookie->getCookie());
                     $this->crawler->addHtmlContent($XML_HTML);
-                    $disciplinas = $this->crawler->filter('input[name="Grid4ContainerDataV"]')->attr('value');           
-                
-                    $dados = $this->trataJson( json_decode($disciplinas));
-                    $this->response($dados);
+                    $notas = $this->crawler->filter('input[name="GXState"]')->attr('value');  
 
+                    $json = $this->fixJson($notas);
+                    $output = $this->trataJson(json_decode($json));
+                    $this->response($output);
                 }else{
 
                     $this->response(array(
@@ -73,17 +74,31 @@ Class disciplinas extends Controller{
     private function trataJson($dados){
         $jsonTratado = array();
         
-        foreach($dados as $disciplina){
+        foreach($dados->vACD_ALUNONOTASPARCIAISRESUMO_SDT as $notas){
+
+            //tratamento das provas
+            $provas = [];
+            if ( count($notas->Datas)>0){
+                foreach($notas->Datas as $data){
+                    $provas[] = array(
+                        "ID" => $data->ACD_PlanoEnsinoAvaliacaoTitulo,
+                        "DATA" => $data->ACD_PlanoEnsinoAvaliacaoDataPrevista,
+                        "AVALIACAO" => $data->Avaliacoes
+                    );
+                }
+            }
+
             $jsonTratado[] = array(
-                "ID" => $disciplina[5],
-                "DESCRICAO" => $disciplina[7],
-                //"MEDIA_FINAL" => (float) $disciplina[12],
-                //"FALTAS" => (int) $disciplina[17],
-                //"FREQUENCIA" => (int) $disciplina[22]
+
+                "ID" => trim($notas->ACD_DisciplinaSigla),
+                "DESCRICAO" => trim($notas->ACD_DisciplinaNome),
+                "MEDIA" => (int) $notas->ACD_AlunoHistoricoItemMediaFinal,
+                "PROVAS" => $provas
             );
+
         }
 
-
+        
         return $jsonTratado;
     }
 

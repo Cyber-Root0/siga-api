@@ -4,6 +4,7 @@ namespace app\core;
 use app\core\Auth\Auth;
 use app\controller\Session\Cookie;
 use app\classes\Input;
+use app\classes\FixJson;
 require_once('../app/functions/functions.php');
 class controller extends Auth{
      
@@ -44,16 +45,25 @@ class controller extends Auth{
         }
 
         if($this->cookie->issetCookie()){
-            
             if (!$this->cookie->validCookie()){
-
+                
                 $this->cookie->refresh();
             }
             
         }else{
+            
             $this->status_cookie = false;
         }
 
+
+    }
+
+    public function fixJson($js){
+       
+        $dataH = FixJson::fix($js);
+        
+        return $dataH;
+       
 
     }
 }

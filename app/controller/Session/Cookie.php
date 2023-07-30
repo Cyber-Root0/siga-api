@@ -40,7 +40,7 @@ use GuzzleHttp\Cookie\CookieJar;
 
     }
     public function issetCookie(){
-
+        
         if ( file_exists($this->path.$this->filename) ){
 
             return true;
@@ -66,7 +66,7 @@ use GuzzleHttp\Cookie\CookieJar;
         //echo $response->getStatusCode();
     }
 
-    private function create(){
+    public function create(){
 
         $data = file_get_contents($this->path."/user.json");
         $data = json_decode($data);
@@ -102,6 +102,7 @@ use GuzzleHttp\Cookie\CookieJar;
 
     public function refresh(){
 
+        
         $data = file_get_contents($this->path."/user.json");
         $data = json_decode($data);
 

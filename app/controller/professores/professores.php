@@ -1,13 +1,14 @@
 <?php
-namespace app\controller\disciplinas;
+namespace app\controller\professores;
 use app\core\Controller;
 use app\interfaces\ControllerInterface;
 use app\classes\Input;
+use app\classes\FixJson;
 use app\controller\Session\Cookie;
 use app\classes\HttpFactory;
 use Symfony\Component\DomCrawler\Crawler;
 
-Class disciplinas extends Controller{
+Class professores extends Controller{
 
     public $uid = null;
     public $siga = null;
@@ -34,11 +35,9 @@ Class disciplinas extends Controller{
 
                     $XML_HTML = $this->getContent($this->cookie->getCookie());
                     $this->crawler->addHtmlContent($XML_HTML);
-                    $disciplinas = $this->crawler->filter('input[name="Grid4ContainerDataV"]')->attr('value');           
-                
-                    $dados = $this->trataJson( json_decode($disciplinas));
-                    $this->response($dados);
-
+                    $professores = $this->crawler->filter('input[name="Grid1ContainerDataV"]')->attr('value');  
+                    $output = $this->trataJson(json_decode($professores));
+                    $this->response($output);
                 }else{
 
                     $this->response(array(
@@ -61,7 +60,7 @@ Class disciplinas extends Controller{
 
         $http_client= new HttpFactory(
             "GET",
-            "https://siga.cps.sp.gov.br/aluno/notasparciais.aspx",
+            "https://siga.cps.sp.gov.br/aluno/horario.aspx.aspx",
             null,
             null,
             $cookie
@@ -73,17 +72,19 @@ Class disciplinas extends Controller{
     private function trataJson($dados){
         $jsonTratado = array();
         
-        foreach($dados as $disciplina){
+        foreach($dados as $professor){
+
             $jsonTratado[] = array(
-                "ID" => $disciplina[5],
-                "DESCRICAO" => $disciplina[7],
-                //"MEDIA_FINAL" => (float) $disciplina[12],
-                //"FALTAS" => (int) $disciplina[17],
-                //"FREQUENCIA" => (int) $disciplina[22]
+
+                "ID" => $professor[0],
+                "DESCRICAO" => $professor[1],
+                "TURMA" => $professor[2],
+                "NOME" => $professor[3]
             );
+
         }
 
-
+       
         return $jsonTratado;
     }
 

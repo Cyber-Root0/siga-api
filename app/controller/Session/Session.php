@@ -6,6 +6,7 @@ use app\interfaces\ControllerInterface;
 use app\classes\Input;
 use app\classes\CPF;
 use app\classes\Files;
+use app\controller\Session\Cookie;
 
 Class Session extends Controller implements ControllerInterface{
 
@@ -137,6 +138,9 @@ Class Session extends Controller implements ControllerInterface{
     private function SaveSession(){
 
         Files::createFile('user.json',$this->pack());
+        //create a new Cookie
+        $cookie = new Cookie($this->uid);
+        $cookie->create();
 
     }
 }
