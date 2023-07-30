@@ -1,4 +1,11 @@
 <?php
+/*
+ * @software API for the Siga Student System | Fatec
+ * @author Bruno Venancio Alves <boteistem@gmail.com>
+ * @copyrigh (c) 2023 
+ * @license  Open Software License v. 3.0 (OSL-3.0)
+ */
+
 define("BASE", '/');
 define('UNSET_URI_COUNT',0);
 define('DEBUG_URI',false);
