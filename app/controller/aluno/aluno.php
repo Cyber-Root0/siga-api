@@ -86,9 +86,22 @@ Class aluno extends Controller{
         $jsonTratado["FATEC_UNIDADE"] = $dados->vUNI_UNIDADENOME_MPAGE;
         $jsonTratado["CURSO"] = $dados->vACD_CURSONOME_MPAGE;
         $jsonTratado["TURNO"] = $dados->vACD_PERIODODESCRICAO_MPAGE;
-       
+        $jsonTratado["CICLO"] = (int) $dados->MPW0041vACD_ALUNOCURSOCICLOATUAL;
+        $jsonTratado["FOTO_URL"] = $this->getProfileImg();
+        
         echo json_encode($jsonTratado);
         //return $jsonTratado;
+    }
+
+    private function getProfileImg(){
+
+        $url = $this->crawler->filter('div#MPW0041FOTO img')->attr('src');
+        if (!empty($url)){
+            return $url;
+        }else{
+            "";
+        }
+
     }
 
 }
