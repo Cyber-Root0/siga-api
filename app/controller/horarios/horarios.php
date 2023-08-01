@@ -121,34 +121,8 @@ Class horarios extends Controller{
     }
 
     private function trataJson($dados){
-        $jsonTratado = array();
-        
-        foreach($dados->vACD_ALUNONOTASPARCIAISRESUMO_SDT as $notas){
-
-            //tratamento das provas
-            $provas = [];
-            if ( count($notas->Datas)>0){
-                foreach($notas->Datas as $data){
-                    $provas[] = array(
-                        "ID" => $data->ACD_PlanoEnsinoAvaliacaoTitulo,
-                        "DATA" => $data->ACD_PlanoEnsinoAvaliacaoDataPrevista,
-                        "AVALIACAO" => $data->Avaliacoes
-                    );
-                }
-            }
-
-            $jsonTratado[] = array(
-
-                "ID" => trim($notas->ACD_DisciplinaSigla),
-                "DESCRICAO" => trim($notas->ACD_DisciplinaNome),
-                "MEDIA" => (int) $notas->ACD_AlunoHistoricoItemMediaFinal,
-                "PROVAS" => $provas
-            );
-
-        }
-
-        
-        return $jsonTratado;
+        return null;        
+    
     }
 
 }
