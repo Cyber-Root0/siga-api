@@ -75,7 +75,7 @@ Class Session extends Controller implements ControllerInterface{
         
         $this->setPath();
         
-        if (self::issetSession()){
+        if (self::issetSession() && !empty($this->uid)){
             Files::removeDir();
             $this->response(
                 array(
@@ -88,7 +88,7 @@ Class Session extends Controller implements ControllerInterface{
             $this->response(
                 array(
                     "code" => 404,
-                    "message" => 'Essa Sessão não existe',
+                    "message" => 'Essa Sessão não existe ou parametro não enviado',
                     "uid" => $this->uid
                 )
             );
@@ -112,8 +112,7 @@ Class Session extends Controller implements ControllerInterface{
     }
 
     private function setPath(){
-        $path = Input::post("uid");
-        $this->path_dir=__DIR__.'/../../sessions/'.Crypto::get_uid_key($path);
+        $this->path_dir=__DIR__.'/../../sessions/'.$this->uid;
         Files::$path = $this->path_dir;
     }
     private function setBody($code, $msg){
