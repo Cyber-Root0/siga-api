@@ -71,10 +71,9 @@ Class Session extends Controller implements ControllerInterface{
     }
 
     public function deleteSession(){
-        $this->uid = Input::post("uid");
+        $this->uid = Crypto::get_uid_key(Input::post("uid"));
         
         $this->setPath();
-        
         if (self::issetSession() && !empty($this->uid)){
             Files::removeDir();
             $this->response(

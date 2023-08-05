@@ -1,0 +1,54 @@
+aside {
+  display: none;
+}
+
+.content {
+  margin-left: 0 !important;
+}
+
+.row {
+  display: block;
+}
+
+.left, .right {
+  width: auto;
+  max-width: 100%;
+}
+
+.right {
+  padding: 0;
+}
+
+.language-selector {
+  padding: 10px;
+}
+
+.language-selector select {
+  margin: 0;
+}
+
+header .environment span {
+  display: none;
+}
+
+header .title {
+  font-size: 18px !important;
+}
+
+header .logo {
+  margin-left: 0 !important;
+  padding: 0 !important;
+}
+
+header .environment {
+  padding: 0 5px !important;
+}
+
+header .run, header .example-toggler {
+  display: none !important;
+}
+
+.hamburger-toggler {
+  display: inline-block;
+  padding: 15px;
+}
