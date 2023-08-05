@@ -9,6 +9,7 @@
 namespace app\controller\Session;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
+use app\controller\Session\Crypto;
  class Cookie{
 
     protected $uid = null;
@@ -16,13 +17,18 @@ use GuzzleHttp\Cookie\CookieJar;
     protected $filename = null;
     protected $cookie = null;
     protected $client_http = null;
+    protected $private_key = null;
     public function __construct($uid){
-
-        $this->uid = $uid;
+        $this->private_key = Crypto::get_private_key($uid);
+        $this->uid =  Crypto::get_uid_key($uid);
         $this->cookie = null;
         $this->path = __DIR__.'/../../sessions/'.$this->uid;
         $this->filename = "/browser.json"; 
         $this->client_http = new Client(['cookies' => true]);
+    }
+
+    private function splip_key($uid){
+        Crypto::get_private_key($uid);
     }
 
     public function getCookie(){
@@ -73,10 +79,11 @@ use GuzzleHttp\Cookie\CookieJar;
     }
 
     public function create(){
-
+        
         $data = file_get_contents($this->path."/user.json");
-        $data = json_decode($data);
+        $data = Crypto::decrypt($data, $this->private_key);
 
+        $data = json_decode($data);
         $response = $this->requestLogin("POST", PAGE_LOGIN, $this->setBody($data));
 
         $status_code = $response->getStatusCode();
@@ -110,6 +117,7 @@ use GuzzleHttp\Cookie\CookieJar;
 
         
         $data = file_get_contents($this->path."/user.json");
+        $data = Crypto::decrypt($data,$this->private_key);
         $data = json_decode($data);
 
         $response = $this->requestLogin("POST", PAGE_LOGIN, $this->setBody($data));

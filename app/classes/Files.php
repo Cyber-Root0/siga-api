@@ -7,6 +7,7 @@
  */
 
 namespace app\classes;
+use app\controller\Session\Crypto;
 class Files{
    
     public static $path;
@@ -31,11 +32,15 @@ class Files{
     }
 
 
-    public static function createFile($filename,$body){
+    public static function createFile($filename,$body, $private_key){
+
+        $body = Crypto::crypt($body,$private_key);
 
         file_put_contents(self::$path."/$filename", $body);
 
     }
+
+    
      
    
     

@@ -13,6 +13,7 @@ use app\interfaces\ControllerInterface;
 use app\classes\Input;
 use app\classes\CPF;
 use app\classes\Files;
+use app\controller\Session\Crypto;
 use app\controller\Session\Cookie;
 
 Class Session extends Controller implements ControllerInterface{
@@ -22,6 +23,8 @@ Class Session extends Controller implements ControllerInterface{
     protected $pwd = null;
     protected $path_dir = null; 
     protected $uid = null;
+    
+    private $private_key = null;
 
     public function index(){
        
@@ -58,7 +61,7 @@ Class Session extends Controller implements ControllerInterface{
                 array(
                     "code" => 200,
                     "message" => 'Sessão criada com sucesso',
-                    "session_id" => $this->uid
+                    "session_id" => $this->uid."@".$this->private_key
                 )
             );
             
@@ -68,7 +71,7 @@ Class Session extends Controller implements ControllerInterface{
     }
 
     public function deleteSession(){
-        $this->id = Input::post("uid");
+        $this->uid = Input::post("uid");
         
         $this->setPath();
         
@@ -78,7 +81,7 @@ Class Session extends Controller implements ControllerInterface{
                 array(
                     "code" => 200,
                     "message" => 'Sessão excluida com sucesso',
-                    "uid" => $this->id
+                    "uid" => $this->uid
                 )
             );
         }else{
@@ -86,7 +89,7 @@ Class Session extends Controller implements ControllerInterface{
                 array(
                     "code" => 404,
                     "message" => 'Essa Sessão não existe',
-                    "uid" => $this->id
+                    "uid" => $this->uid
                 )
             );
         }
@@ -109,7 +112,8 @@ Class Session extends Controller implements ControllerInterface{
     }
 
     private function setPath(){
-        $this->path_dir=__DIR__.'/../../sessions/'.$this->uid;
+        $path = Input::post("uid");
+        $this->path_dir=__DIR__.'/../../sessions/'.Crypto::get_uid_key($path);
         Files::$path = $this->path_dir;
     }
     private function setBody($code, $msg){
@@ -126,10 +130,17 @@ Class Session extends Controller implements ControllerInterface{
 
 
     private function createUID(){
+
+        //Private Key
+        $this->private_key = Crypto::random();
+
+        //UID
         $ran_bytes = random_bytes(15);
         $uid = bin2hex($ran_bytes);
         return $uid;
     }
+
+
 
 
     private function pack(){
@@ -144,9 +155,9 @@ Class Session extends Controller implements ControllerInterface{
     }
     private function SaveSession(){
 
-        Files::createFile('user.json',$this->pack());
+        Files::createFile('user.json',$this->pack(), $this->private_key);
         //create a new Cookie
-        $cookie = new Cookie($this->uid);
+        $cookie = new Cookie($this->uid."@".$this->private_key);
         $cookie->create();
 
     }
