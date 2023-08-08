@@ -20,15 +20,17 @@ Class Crypto {
         return base64_encode($r);
     }
 
-    public static function get_private_key($uid){
+    public static function get_private_key($uid=null){
 
+        if ($uid==null) return '';
         $data = explode("@",$uid);
         return $data[1];
 
     }
 
-    public static function get_uid_key($uid){
+    public static function get_uid_key($uid=null){
 
+        if ($uid==null) return '';
         $data = explode("@",$uid);
         return $data[0];
 
