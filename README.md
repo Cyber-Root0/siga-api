@@ -32,7 +32,7 @@ Para executar a API em seu ambiente local, siga os passos abaixo:
 
 1.  Clone este repositório: `git clone https://github.com/Cyber-Root0/siga-api`
 2.  Instale as dependências do PHP: `composer install`
-4.  Inicie o servidor PHP local: `php -S localhost:8000`
+4.  Inicie o servidor PHP local: `php -S localhost:80 -t public public/index.php`
 
 Conclusão
 ---------

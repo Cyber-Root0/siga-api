@@ -18,11 +18,19 @@ class RouterCore{
 
     public function __construct(){
        $this->initialize();
-       require_once('../app/config/Router.php');
+       $this->setRoute();
        $this->execute();
 
     }
 
+    private function setRoute(){
+
+        if( strpos( $_SERVER['SERVER_SOFTWARE'], 'Apache') !== false){
+            require_once('../app/config/Router.php');
+       }else{
+            require_once($_SERVER['DOCUMENT_ROOT'].'/../app/config/Router.php');    
+       }
+    }
     private function initialize(){
 
         $this->method = $_SERVER['REQUEST_METHOD'];

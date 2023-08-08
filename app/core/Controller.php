@@ -13,7 +13,6 @@ use app\controller\Session\Cookie;
 use app\classes\Input;
 use app\classes\FixJson;
 use app\controller\Session\Crypto;
-require_once('../app/functions/functions.php');
 class controller extends Auth{
      
     protected $cookie;
