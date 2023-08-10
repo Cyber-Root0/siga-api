@@ -40,6 +40,7 @@ Class disciplinas extends Controller{
                 if ($this->status_cookie){
 
                     $XML_HTML = $this->getContent($this->cookie->getCookie());
+                    
                     $this->crawler->addHtmlContent($XML_HTML);
                     $disciplinas = $this->crawler->filter('input[name="Grid4ContainerDataV"]')->attr('value');           
                 

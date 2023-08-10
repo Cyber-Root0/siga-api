@@ -109,6 +109,7 @@ use app\controller\Session\Crypto;
             ],
              "allow_redirects" => false,
              "cookies" => $cookie,
+             "verify" => false,
         ]);
 
     }

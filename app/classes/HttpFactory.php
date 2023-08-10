@@ -32,6 +32,8 @@ class HttpFactory{
         $response = $this->client->request($this->method, $this->url . '/' . $this->path, [
             'body'    => $this->body, 
             'cookies' => $this->cookie,
+            "allow_redirects" => false,
+            "verify" => false,
             'headers' => [
                'content-type' => 'application/x-www-form-urlencoded', 
                'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 
