@@ -23,7 +23,7 @@ Características
 Documentação
 ------------
 Link da API:
-[API SIGA](https://apisiga.000webhostapp.com/).
+[API SIGA](https://apisiga.ddns.net/).
 
 Para informações detalhadas sobre como utilizar a API SIGA para Fatecs em PHP, consulte a documentação completa em [Documentação da API](https://cyber-root0.github.io/siga-api/docs/).
 
