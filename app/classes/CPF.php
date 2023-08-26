@@ -9,7 +9,11 @@
 
 namespace app\classes;
 class CPF{
-        
+    public const estados = array(
+        "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA",
+        "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN",
+        "RS", "RO", "RR", "SC", "SP", "SE", "TO"
+    );
     public static function validaCPF($cpf) {
  
         // Extrai somente os números
@@ -37,5 +41,29 @@ class CPF{
         }
         return true;
     
+    }
+
+    public static function validaRG($login_rg){
+        //extract numbers
+        $numbers_rg = preg_replace( '/[^0-9]/is', '', $login_rg );
+        //extract text, after number
+        $suffix = str_replace($numbers_rg, "",$login_rg);
+
+        if (strlen($numbers_rg<10) && in_array(strtoupper($suffix), self::estados) ){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public static function validaRA($ra){
+        // Extrai somente os números
+        $ra = preg_replace( '/[^0-9]/is', '', $ra );
+        if (strlen($ra) > 14) {
+            return false;
+        }else{
+            return true;
+        }
+
     }
 }

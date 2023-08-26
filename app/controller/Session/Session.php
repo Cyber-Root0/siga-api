@@ -96,7 +96,7 @@ Class Session extends Controller implements ControllerInterface{
 
     public function validData(){
         if (!empty($this->id) && !empty($this->pwd)){
-            if (CPF::validaCPF($this->id)){
+            if (CPF::validaCPF($this->id) || CPF::validaRA($this->id) || CPF::validaRG($this->id)){
                 return true;
             }else{
                 $this->response($this->setBody(400, 'CPF inválido'));
