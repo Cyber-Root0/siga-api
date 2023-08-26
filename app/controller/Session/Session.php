@@ -99,7 +99,7 @@ Class Session extends Controller implements ControllerInterface{
             if (CPF::validaCPF($this->id) || CPF::validaRA($this->id) || CPF::validaRG($this->id)){
                 return true;
             }else{
-                $this->response($this->setBody(400, 'CPF inválido'));
+                $this->response($this->setBody(400, 'CPF/RA/RG Inválido'));
             }
 
         }else{
