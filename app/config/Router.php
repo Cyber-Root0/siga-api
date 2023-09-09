@@ -34,6 +34,11 @@ $this->get('/api/professores/all', 'professores\\professores@get');
 //Dados do Aluno
 $this->get('/api/aluno/all', 'aluno\\aluno@get');
 
+//Plano de ensino
+$this->get('/api/plano-ensino/', 'planoensino\\planoensino@get');
+$this->get('/api/plano-ensino/materiais/', 'planoensino\\materiais\\materiais@get');
+$this->get('/api/plano-ensino/aulas/', 'planoensino\\aulas\\aulas@get');
+
 
 
 

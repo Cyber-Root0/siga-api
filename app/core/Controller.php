@@ -14,7 +14,7 @@ use app\classes\Input;
 use app\classes\FixJson;
 use app\controller\Session\Crypto;
 class controller extends Auth{
-     
+      
     protected $cookie;
     protected $status_cookie = true;
     public function __construct(){
