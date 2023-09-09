@@ -30,7 +30,7 @@ class HttpFactory{
      public function request(){
 
         $response = $this->client->request($this->method, $this->url . '/' . $this->path, [
-            'body'    => $this->body, 
+            'form_params'    => $this->body, 
             'cookies' => $this->cookie,
             "allow_redirects" => false,
             "verify" => false,
