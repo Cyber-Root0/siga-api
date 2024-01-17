@@ -34,7 +34,6 @@ Class faltas extends Controller{
         $this->crawler = new Crawler;
         parent::__construct();
     }
-
     public function get(){
         
        
@@ -43,8 +42,9 @@ Class faltas extends Controller{
                     $XML_HTML = $this->getContent($this->cookie->getCookie());
                     $this->crawler->addHtmlContent($XML_HTML);
                     $faltas = $this->crawler->filter('input[name="GXState"]')->attr('value');  
-
-                    $json = $this->fixJson($faltas);
+                    
+                    $json = FixJson::fix($faltas);
+                    
                     $output = $this->trataJson(json_decode($json));
                     $this->response($output);
                 }else{

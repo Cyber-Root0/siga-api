@@ -1,5 +1,9 @@
 <?php
 namespace app\classes;
+use JsonMachine\Items;
+use JsonMachine\JsonDecoder\DecodingError;
+use JsonMachine\JsonDecoder\ErrorWrappingDecoder;
+use JsonMachine\JsonDecoder\ExtJsonDecoder;
 /*
  * @software API for the Siga Student System | Fatec
  * @author Bruno Venancio Alves <boteistem@gmail.com>
@@ -9,37 +13,18 @@ namespace app\classes;
 
 class FixJson{
         
-    public static function fix($string){
+    public static function fix($json){
 
-
-        $curl = curl_init();
-
-        curl_setopt_array($curl, [
-        CURLOPT_URL => "https://jsonformatter.curiousconcept.com/process?=",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_SSL_VERIFYHOST => false,
-        CURLOPT_SSL_VERIFYPEER => false,
-        CURLOPT_FOLLOWLOCATION => false,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "POST",
-        CURLOPT_POSTFIELDS => http_build_query(array(
-            "jsonfix" => "on",
-            "jsontemplate" => "1",
-            "data" => $string,
-            
-        )),
-        CURLOPT_HTTPHEADER => [
-            "Content-Type: application/x-www-form-urlencoded"
-          ],
-        ]);
-        
-        $response = curl_exec($curl);
-        //echo $response;
-        $data = json_decode($response);
-        return $data->result->data;
+    $data = [];   
+    $items = Items::fromString($json, ['decoder' => new ErrorWrappingDecoder(new ExtJsonDecoder())]);
+        foreach ($items as $key => $item) {
+            if ($key instanceof DecodingError || $item instanceof DecodingError) {
+                // handle error of this malformed json item
+                continue;
+            }
+            $data[$key] = $item;
+        }
+    return json_encode($data);
 
     }
 }
