@@ -9,7 +9,7 @@
 
 //Doc
 $this->get('', function(){
-    echo "Estou na area da home";
+    require_once(__DIR__."/../../docs/index.html");
 });
 
 //Session

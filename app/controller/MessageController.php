@@ -19,6 +19,5 @@ class MessageController extends Controller{
         echo "<p> $message </p>";
     }
 
-    
 
 }
