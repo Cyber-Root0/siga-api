@@ -33,7 +33,8 @@ class RouterCore{
        }
     }
     private function initialize(){
-
+        echo json_encode($_SERVER);
+        exit;
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->uri = $_SERVER['REQUEST_URI'];
         //$_SESSION['nome'] = "Bruno";
