@@ -3,7 +3,7 @@
         'name' => 'cyber-root0/siga-api',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'fc8084e8aa9af9eaa06752661a7e008dd6f837b2',
+        'reference' => 'cb98f7df37c8ce1c3fe86d931cfab93d9c1ecf75',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'cyber-root0/siga-api' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'fc8084e8aa9af9eaa06752661a7e008dd6f837b2',
+            'reference' => 'cb98f7df37c8ce1c3fe86d931cfab93d9c1ecf75',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

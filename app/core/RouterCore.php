@@ -28,7 +28,7 @@ class RouterCore{
         if( strpos( $_SERVER['SERVER_SOFTWARE'], 'Apache') !== false){
             require_once('../app/config/Router.php');
        }else{
-            //@require_once($_SERVER['DOCUMENT_ROOT'].'/../app/config/Router.php');
+            @require_once($_SERVER['DOCUMENT_ROOT'].'/../app/config/Router.php');
             @require_once(__DIR__.'/../config/Router.php');
        }
     }
@@ -127,6 +127,7 @@ class RouterCore{
 
     private function executeController($get){
         $ex = explode("@",$get);
+        
        // dd($ex);
         if (!isset($ex[0]) || !isset($ex[1]) ){
             (new \app\controller\MessageController)->message404('404','Essa Controller, ou método não existe.');
@@ -134,6 +135,7 @@ class RouterCore{
         }
 
         $const = 'app\\controller\\'.$ex[0];
+        
         //dd($const);
         if (!class_exists($const)){
             (new \app\controller\MessageController)->message404('404','controller não existe.');

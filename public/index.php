@@ -7,6 +7,8 @@
  */
 error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE);
 require_once(__DIR__.'/../vendor/autoload.php');
+
+
 require_once(__DIR__.'/../app/config/config.php');
 require_once(__DIR__.'/../app/functions/functions.php');
 session_start();

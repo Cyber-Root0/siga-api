@@ -14,7 +14,8 @@ use app\controller\Session\Cookie;
 use app\classes\HttpFactory;
 use Symfony\Component\DomCrawler\Crawler;
 
-Class disciplinas extends Controller{
+Class disciplinas extends Controller
+{
 
     public $uid = null;
     public $siga = null;
@@ -23,65 +24,71 @@ Class disciplinas extends Controller{
 
     protected Crawler $crawler;
 
-    public function index(){
+    public function index()
+    {
 
     }
 
-    public function __construct(){
+    public function __construct()
+    {
 
         $this->uid = Input::get("uid");
         $this->crawler = new Crawler;
         parent::__construct();
     }
 
-    public function get(){
-        
-       
-                if ($this->status_cookie){
+    public function get()
+    {
 
-                    $XML_HTML = $this->getContent($this->cookie->getCookie());
-                    
-                    $this->crawler->addHtmlContent($XML_HTML);
-                    $disciplinas = $this->crawler->filter('input[name="Grid4ContainerDataV"]')->attr('value');           
-                
-                    $dados = $this->trataJson( json_decode($disciplinas));
-                    $this->response($dados);
 
-                }else{
+        if ($this->status_cookie) {
 
-                    $this->response(array(
-                            "error" => 400,
-                            "msg" => "Crie uma sessão com um usuário válido"
-                    )); 
+            $XML_HTML = $this->getContent($this->cookie->getCookie());
 
-                }
+            $this->crawler->addHtmlContent($XML_HTML);
+            $disciplinas = $this->crawler->filter('input[name="Grid4ContainerDataV"]')->attr('value');
+
+            $dados = $this->trataJson(json_decode($disciplinas));
+            $this->response($dados);
+
+        } else {
+
+            $this->response(array(
+                "error" => 400,
+                "msg" => "Crie uma sessão com um usuário válido"
+            ));
+
+        }
+
+    }
+
+    public function Post()
+    {
+
+
 
     }
 
-    public function Post(){
 
+    private function getContent($cookie)
+    {
 
-
-    }
-    
-
-    private function getContent($cookie){
-
-        $http_client= new HttpFactory(
+        $http_client = new HttpFactory(
             "GET",
             "https://siga.cps.sp.gov.br/aluno/notasparciais.aspx",
             null,
             null,
             $cookie
         );
-        $response= $http_client->request();
+        $response = $http_client->request();
         return $response->getBody()->getContents();
     }
 
-    private function trataJson($dados){
+    private function trataJson($dados)
+    {
         $jsonTratado = array();
-        
-        foreach($dados as $disciplina){
+
+        foreach ($dados as $disciplina) {
             $jsonTratado[] = array(
                 "ID" => $disciplina[5],
                 "DESCRICAO" => $disciplina[7],
