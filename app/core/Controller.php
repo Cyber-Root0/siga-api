@@ -13,7 +13,7 @@ use app\controller\Session\Cookie;
 use app\classes\Input;
 use app\classes\FixJson;
 use app\controller\Session\Crypto;
-class controller extends Auth{
+class Controller extends Auth{
       
     protected $cookie;
     protected $status_cookie = true;
