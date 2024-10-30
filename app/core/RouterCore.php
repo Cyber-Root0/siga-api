@@ -68,9 +68,6 @@ class RouterCore{
     }
 
     private function executeGet(){
-        var_dump($this->getArr);
-        var_dump($this->uri);
-        exit;
         $error_ = true;
         foreach($this->getArr as $get){
            //dd($get,false);
