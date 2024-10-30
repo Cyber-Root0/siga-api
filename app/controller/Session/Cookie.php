@@ -57,8 +57,6 @@ use app\controller\Session\Crypto;
 
             return true;
         }else{
-            echo "nao existe cookie";
-            exit;
             return false;
         }
 
