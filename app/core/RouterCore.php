@@ -28,8 +28,9 @@ class RouterCore{
         if( strpos( $_SERVER['SERVER_SOFTWARE'], 'Apache') !== false){
             require_once('../app/config/Router.php');
        }else{
-            @require_once($_SERVER['DOCUMENT_ROOT'].'/../app/config/Router.php');
-            @require_once('../app/config/Router.php');  
+            var_dump(scandir(__DIR__));
+            //@require_once($_SERVER['DOCUMENT_ROOT'].'/../app/config/Router.php');
+            //@require_once('../app/config/Router.php');  
        }
     }
     private function initialize(){
