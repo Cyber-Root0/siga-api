@@ -6,7 +6,8 @@
  * @license  Open Software License v. 3.0 (OSL-3.0)
  */
 
-
+echo "teste";
+exit;
 //Doc
 $this->get('', function(){
     require_once(__DIR__."/../../docs/index.html");
